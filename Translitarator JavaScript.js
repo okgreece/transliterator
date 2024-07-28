@@ -1,88 +1,73 @@
-const transl = {
-    "ne-GR": "Modern Greek",
-    "ae-GR": "Ancient Greek",
-    "la-ISO": "Latin ISO 843",
-    "la-RT": "Latin Romanization"
+const translations = {
+    el: {
+        title: "Μεταγραμματισμός ελληνικών χαρακτήρων σε λατινικούς",
+        textLabel: "Κείμενο",
+        textPlaceholder: "Εισάγετε το κείμενο για μεταγραμματισμό",
+        ancientGreekLabel: "Αρχαία ελληνικά",
+        alaLcLabel: "ALA-LC romanization",
+        copy: "Αντιγραφή",
+        iso843Label: "ISO843:1997",
+        submitButton: "Υποβολή",
+        clearButton: "Διαγραφή"
+    },
+    en: {
+        title: "Transliteration of Greek characters into Latin",
+        textLabel: "Text",
+        textPlaceholder: "Enter text for transliteration",
+        ancientGreekLabel: "Ancient Greek",
+        alaLcLabel: "ALA-LC romanization",
+        copy: "Copy",
+        iso843Label: "ISO843:1997",
+        submitButton: "Submit",
+        clearButton: "Clear"
+    }
 };
 
-const selectTag = document.querySelectorAll("select"),
-      transliterationBtn = document.querySelector("button"),
-      inputText = document.getElementById("inputText"),
-      resultText = document.getElementById("resultText");
+let currentLanguage = 'el';
 
-selectTag.forEach((tag, id) => {
-    for (const transliteration_code in transl) {
-        let selected = "";
-        if (id == 0 && (transliteration_code == "ne-GR" || transliteration_code == "ae-GR")) {
-            if (transliteration_code == "ne-GR") {
-                selected = "selected";
-            }
-            let option = `<option value="${transliteration_code}" ${selected}>${transl[transliteration_code]}</option>`;
-            tag.insertAdjacentHTML("beforeend", option);
-        } else if (id == 1 && (transliteration_code == "la-ISO" || transliteration_code == "la-RT")) {
-            if (transliteration_code == "la-ISO") {
-                selected = "selected";
-            }
-            let option = `<option value="${transliteration_code}" ${selected}>${transl[transliteration_code]}</option>`;
-            tag.insertAdjacentHTML("beforeend", option);
-        }
-    }
-});
+function setLanguage(lang) {
+    currentLanguage = lang;
+    document.getElementById('title').textContent = translations[lang].title;
+    document.getElementById('text-label').textContent = translations[lang].textLabel;
+    document.getElementById('text').placeholder = translations[lang].textPlaceholder;
+    document.getElementById('ancient-greek-label').textContent = translations[lang].ancientGreekLabel;
+    document.getElementById('ala-lc-label').textContent = translations[lang].alaLcLabel;
+    document.getElementById('iso843-label').textContent = translations[lang].iso843Label;
+    document.getElementById('submit-button').textContent = translations[lang].submitButton;
+    document.getElementById('clear-button').textContent = translations[lang].clearButton;
+}
 
-transliterationBtn.addEventListener("click", () => {
-    let text = inputText.value.trim(),
-        translateFrom = selectTag[0].value,
-        translateTo = selectTag[1].value;
+function copyText(id) {
+    const text = document.getElementById(id).value;
+    navigator.clipboard.writeText(text).then(() => {
+        alert(translations[currentLanguage].copy);
+    });
+}
 
-    if (!text) return;
+function clearForm() {
+    const ancientGreekCheckbox = document.getElementById('ancient-greek').checked;
+    document.getElementById('transliteration-form').reset();
+    document.getElementById('ancient-greek').checked = ancientGreekCheckbox;
+}
 
-    resultText.setAttribute("placeholder", "Transliterating...");
+document.getElementById('transliteration-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const inputText = document.getElementById('text').value;
+    const isAncientGreek = document.getElementById('ancient-greek').checked;
 
-    let translatedText;
+    let alaLcResult, iso843Result;
 
-    // Determine the function to call based on the selected options
-    switch (translateFrom + "-" + translateTo) {
-        case "ne-GR-la-ISO":
-            translatedText = modernGreekToLatinTransliterationIso843(text);
-            break;
-        case "ne-GR-la-RT":
-            translatedText = modernGreekToLatinTransliterationRomanization(text);
-            break;
-        case "ae-GR-la-ISO":
-            translatedText = ancientGreekToLatinTransliterationIso843(text);
-            break;
-        case "ae-GR-la-RT":
-            translatedText = ancientGreekToLatinTransliterationRomanization(text);
-            break;
-        default:
-            translatedText = "Transliteration function not found.";
-            break;
+    if (isAncientGreek) {
+        alaLcResult = ancientGreekToLatinTransliterationRomanization(inputText);
+        iso843Result = ancientGreekToLatinTransliterationIso843(inputText);
+    } else {
+        alaLcResult = modernGreekToLatinTransliterationRomanization(inputText);
+        iso843Result = modernGreekToLatinTransliterationIso843(inputText);
     }
 
-    resultText.value = translatedText;
-    resultText.setAttribute("placeholder", "Transliteration");
+    document.getElementById('ala-lc').value = alaLcResult;
+    document.getElementById('iso843').value = iso843Result;
 });
-
-// Placeholder functions for transliteration logic
-function modernGreekToLatinTransliterationIso843(text) {
-    // Implement the actual transliteration logic here
-    return text; // Placeholder
-}
-
-function modernGreekToLatinTransliterationRomanization(text) {
-    // Implement the actual transliteration logic here
-    return text; // Placeholder
-}
-
-function ancientGreekToLatinTransliterationIso843(text) {
-    // Implement the actual transliteration logic here
-    return text; // Placeholder
-}
-
-function ancientGreekToLatinTransliterationRomanization(text) {
-    // Implement the actual transliteration logic here
-    return text; // Placeholder
-}
 
 function modernGreekToLatinTransliterationIso843(text) {
     const transliterationMap = {
@@ -331,7 +316,7 @@ function ancientGreekToLatinTransliterationIso843(text) {
                         //Uppercase
                             'Ϊ':'I','Ϋ':'Y',
                         //Lowercase
-                            'ϊ':'i','ϋ':'u','ΐ':'i','ΰ':'u'
+                            'ϊ':'i','ϋ':'y','ΐ':'i','ΰ':'y'
 
     }
     const transliterationMapStarters = {
@@ -568,8 +553,6 @@ function modernGreekToLatinTransliterationRomanization(text) {
 
 }
 
-//----------------------------------------------------------------------------------------------------------------------------------------
-
 function ancientGreekToLatinTransliterationRomanization(text) {
     const transliterationMap = {
          //Romanization
@@ -757,23 +740,5 @@ function ancientGreekToLatinTransliterationRomanization(text) {
 
 }
 
-
-
-// //Greek to Latin
-        //    
-
-            //Romanization Table /Modern
-              //Single-letter Mapping
-            //   'Α':'A','α':'a','Β':'V','β':'v','Γ':'G','γ':'g','Δ':'D','δ':'d','Ε':'E','ε':'e','Ζ':'Z','ζ':'z','Η':'Ē','η':'ē','Θ':'Th',
-            //   'θ':'th','Ι':'I','ι':'i','Κ':'K','κ':'k','Λ':'L','λ':'l','Μ':'M','μ':'m','Ν':'N','ν':'n','Ξ':'X','ξ':'x','Ο':'O','ο':'o',
-            //   'Π':'P','π':'p','Ρ':'R','ρ':'r','Ῥ':'Rh','ῥ':'rh','C':'S','σ':'s','ϲ':'s','ς':'s','Τ':'T','τ':'t','Υ':'Y','υ':'y','Φ':'Ph',
-            //   'φ':'ph','Χ':'Ch','χ':'ch','Ψ':'Ps','ψ':'ps','Ω':'Ō','ω':'ō',
-            //  //Tonismena
-            //  'Ά':'A','ά':'a','Έ':'E','έ':'e','Ή':'Ē','ή':'ē','Ί':'I','ί':'i','Ϊ':'I','ϊ':'i','ΐ':'i','Ό':'O','ό':'o','Ύ':'Y','Ϋ':'Y',
-            //  'ύ':'y','ϋ':'u','ΰ':'u','Ώ':'Ō','ώ':'ō',
-            //   //Archail Letters
-            //   'Ϝ':'W','ϝ':'w','Ϙ':'Ḳ','ϙ':'ḳ',
-            // //2-letters Mapping
-            //   'γγ':'ng','γξ':'nx','γχ':'nch','Μπ':'B','μπ':'b','Ντ':'D̲','ντ':'d̲',
-            //   'Αυ':'Au','Ευ':'Eu','Ηυ':'Ēu','Ου':'Ou','Υι':'Yi','Ωυ':'Ōu',
-            //   'αυ':'au','ευ':'eu','ηυ':'ēu','ου':'ou','υι':'ui','ωυ':'ōu'
+// Set default language to Greek
+setLanguage('el');
