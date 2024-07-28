@@ -1,88 +1,73 @@
-const transl = {
-    "ne-GR": "Modern Greek",
-    "ae-GR": "Ancient Greek",
-    "la-ISO": "Latin ISO 843",
-    "la-RT": "Latin Romanization"
+const translations = {
+    el: {
+        title: "Μεταγραμματισμός ελληνικών χαρακτήρων σε λατινικούς",
+        textLabel: "Κείμενο",
+        textPlaceholder: "Εισάγετε το κείμενο για μεταγραμματισμό",
+        ancientGreekLabel: "Αρχαία ελληνικά",
+        alaLcLabel: "ALA-LC romanization",
+        copy: "Αντιγραφή",
+        iso843Label: "ISO843:1997",
+        submitButton: "Υποβολή",
+        clearButton: "Διαγραφή"
+    },
+    en: {
+        title: "Transliteration of Greek characters into Latin",
+        textLabel: "Text",
+        textPlaceholder: "Enter text for transliteration",
+        ancientGreekLabel: "Ancient Greek",
+        alaLcLabel: "ALA-LC romanization",
+        copy: "Copy",
+        iso843Label: "ISO843:1997",
+        submitButton: "Submit",
+        clearButton: "Clear"
+    }
 };
 
-const selectTag = document.querySelectorAll("select"),
-      transliterationBtn = document.querySelector("button"),
-      inputText = document.getElementById("inputText"),
-      resultText = document.getElementById("resultText");
+let currentLanguage = 'el';
 
-selectTag.forEach((tag, id) => {
-    for (const transliteration_code in transl) {
-        let selected = "";
-        if (id == 0 && (transliteration_code == "ne-GR" || transliteration_code == "ae-GR")) {
-            if (transliteration_code == "ne-GR") {
-                selected = "selected";
-            }
-            let option = `<option value="${transliteration_code}" ${selected}>${transl[transliteration_code]}</option>`;
-            tag.insertAdjacentHTML("beforeend", option);
-        } else if (id == 1 && (transliteration_code == "la-ISO" || transliteration_code == "la-RT")) {
-            if (transliteration_code == "la-ISO") {
-                selected = "selected";
-            }
-            let option = `<option value="${transliteration_code}" ${selected}>${transl[transliteration_code]}</option>`;
-            tag.insertAdjacentHTML("beforeend", option);
-        }
-    }
-});
+function setLanguage(lang) {
+    currentLanguage = lang;
+    document.getElementById('title').textContent = translations[lang].title;
+    document.getElementById('text-label').textContent = translations[lang].textLabel;
+    document.getElementById('text').placeholder = translations[lang].textPlaceholder;
+    document.getElementById('ancient-greek-label').textContent = translations[lang].ancientGreekLabel;
+    document.getElementById('ala-lc-label').textContent = translations[lang].alaLcLabel;
+    document.getElementById('iso843-label').textContent = translations[lang].iso843Label;
+    document.getElementById('submit-button').textContent = translations[lang].submitButton;
+    document.getElementById('clear-button').textContent = translations[lang].clearButton;
+}
 
-transliterationBtn.addEventListener("click", () => {
-    let text = inputText.value.trim(),
-        translateFrom = selectTag[0].value,
-        translateTo = selectTag[1].value;
+function copyText(id) {
+    const text = document.getElementById(id).value;
+    navigator.clipboard.writeText(text).then(() => {
+        alert(translations[currentLanguage].copy);
+    });
+}
 
-    if (!text) return;
+function clearForm() {
+    const ancientGreekCheckbox = document.getElementById('ancient-greek').checked;
+    document.getElementById('transliteration-form').reset();
+    document.getElementById('ancient-greek').checked = ancientGreekCheckbox;
+}
 
-    resultText.setAttribute("placeholder", "Transliterating...");
+document.getElementById('transliteration-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const inputText = document.getElementById('text').value;
+    const isAncientGreek = document.getElementById('ancient-greek').checked;
 
-    let translatedText;
+    let alaLcResult, iso843Result;
 
-    // Determine the function to call based on the selected options
-    switch (translateFrom + "-" + translateTo) {
-        case "ne-GR-la-ISO":
-            translatedText = modernGreekToLatinTransliterationIso843(text);
-            break;
-        case "ne-GR-la-RT":
-            translatedText = modernGreekToLatinTransliterationRomanization(text);
-            break;
-        case "ae-GR-la-ISO":
-            translatedText = ancientGreekToLatinTransliterationIso843(text);
-            break;
-        case "ae-GR-la-RT":
-            translatedText = ancientGreekToLatinTransliterationRomanization(text);
-            break;
-        default:
-            translatedText = "Transliteration function not found.";
-            break;
+    if (isAncientGreek) {
+        alaLcResult = ancientGreekToLatinTransliterationRomanization(inputText);
+        iso843Result = ancientGreekToLatinTransliterationIso843(inputText);
+    } else {
+        alaLcResult = modernGreekToLatinTransliterationRomanization(inputText);
+        iso843Result = modernGreekToLatinTransliterationIso843(inputText);
     }
 
-    resultText.value = translatedText;
-    resultText.setAttribute("placeholder", "Transliteration");
+    document.getElementById('ala-lc').value = alaLcResult;
+    document.getElementById('iso843').value = iso843Result;
 });
-
-// Placeholder functions for transliteration logic
-function modernGreekToLatinTransliterationIso843(text) {
-    // Implement the actual transliteration logic here
-    return text; // Placeholder
-}
-
-function modernGreekToLatinTransliterationRomanization(text) {
-    // Implement the actual transliteration logic here
-    return text; // Placeholder
-}
-
-function ancientGreekToLatinTransliterationIso843(text) {
-    // Implement the actual transliteration logic here
-    return text; // Placeholder
-}
-
-function ancientGreekToLatinTransliterationRomanization(text) {
-    // Implement the actual transliteration logic here
-    return text; // Placeholder
-}
 
 function modernGreekToLatinTransliterationIso843(text) {
     const transliterationMap = {
@@ -263,6 +248,147 @@ function modernGreekToLatinTransliterationIso843(text) {
 
 }
 
+function ancientGreekToLatinTransliterationIso843(text) {
+    const transliterationMap = {
+        //Iso843
+
+            //Single-letters
+                    //Uppercase
+                    'Α':'A','Β':'V','Γ':'G','Δ':'D','Ε':'E','Ζ':'Z','Η':'Ī','Θ':'Th','Ι':'I','Κ':'K','Λ':'L','Μ':'M','Ν':'N','Ξ':'X',
+                    'Ο':'O','Π':'P','Ρ':'R','Σ':'S','Τ':'T','Υ':'Y','Φ':'F','Χ':'Ch','Ψ':'Ps','Ω':'Ō',
+                    //Lowercase
+                    'α':'a','β':'v','γ':'g','δ':'d','ε':'e','ζ':'z','η':'ī','θ':'th','ι':'i','κ':'k','λ':'l','μ':'m','ν':'n','ξ':'x',
+                    'ο':'o','π':'p','ρ':'r','σ':'s','ς':'s','τ':'t','υ':'y','φ':'f','χ':'ch','ω':'ō',
+
+                //Tonismena
+                    //Oxia ( ´ )
+                        //Uppercase
+                            'Ά':'A','Έ':'E','Ή':'Ī','Ί':'I','Ό':'O','Ύ':'Y','Ώ':'Ō',
+                            'Ά':'A','Ἔ':'E','Ἢ':'Ī','Ί':'I','Ὄ':'O','Ὤ':'Ō',//+Apostrofos
+                        //Lowercase
+                            'ά':'a','έ':'e','ή':'ī','ί':'i','ό':'o','ύ':'y','ώ':'ō',
+                                    'έ':'e','ἰ':'i','ό':'o','ύ':'y', // για καποιο λογο εχει διαφορα με το ε
+                             'ἄ':'a','ἤ':'ī','ἴ':'i','ὤ':'ō','ᾤ':'ō', //+Apostrofos
+                                'ΰ':'y',
+                    //Baria ( ` )
+                        //Uppercase
+                          'Ὰ':'A','Ὲ':'E','Ὴ':'Ī','Ὶ':'I','Ὸ':'O','Ὺ':'Y','Ὼ':'Ō',
+                        //Lowercase
+                          'ὰ':'a','ὲ':'e','ὴ':'ī','ὶ':'i','ὸ':'o','ὺ':'y','ὼ':'ō',   
+                          'ὰ':'a','ὲ':'e','ὴ':'ī',        'ὸ':'o',
+                          'ἂ':'a','ἢ':'ī',  //+Apostrofos
+                    //Perispomeni ( ῀ )
+                        //Uppercase - Keno?
+                            'Ώ': 'Ō','Ὅ': 'Ho','Ἵ':'Hi','ᾍ':'Ha','Ἥ':'Hē','Ἕ':'He','Ὥ':'Hō','Εὕ':'Eu','Αἵ':'Hai','Αἷ':'Hai',//megala bale mas swsta
+                            'ἅ':'ha','ἥ':'hē','ἕ':'he','εἱ':'Hei','αἵ':'hai','αἷ':'hai',                         //mikra bake mas swsta
+                        //Lowercase
+                            'ᾶ':'a','ῆ':'ī','ῖ':'i','ῦ':'u','ῶ':'ō',
+                            'ᾷ':'a','ῇ':'ī','ῒ':'i','ΐ':'i','ῗ':'i','ῧ':'y','ῷ':'ō',
+                            'ἶ':'i',
+                            'ὗ':'u', //+dasia
+
+                    //Dasia (Rough Breathing) ( ῾ )
+                         //Uppercase  
+                            'Ἁ': 'Ha', 'Ἑ': 'He', 'Ἡ': 'Hē', 'Ἱ': 'Hi', 'Ὁ': 'Ho', 'Ὑ': 'Hy','Ῥ':'Rh', 'Ὡ': 'Hō',
+                           //2 letter
+                            'Ἅι':'Ha',
+                         //Lowercase
+                            'ἁ':'ha','ἑ':'he','ἡ':'hē','ἱ':'hi','ὁ':'ho','ὑ':'hy','ὡ':'hō',
+                            'ᾁ':'ha','ᾑ':'hē','ᾡ':'hō','ᾅ':'ha','ᾕ':'hē','ᾥ':'hō','ῥ':'rh','ῳ':'hō',
+                            'ὅ':'ho','ὕ':'hu', //+oxia
+                            
+                    //Apostrofos ( ᾽ )  ἤ
+                        //Uppercase
+                            'Ἀ':'A','Ἐ':'E','Ἠ':'Ē','Ἰ':'I','Ὀ':'O','Ὠ':'Ō',
+                        //Lowercase
+                            'ἀ':'a','ἐ':'e','ἠ':'ī','ἰ':'i','ὐ':'u','ὀ':'o','ὠ':'ō',
+                //Simeiosi 1
+                        //Uppercase
+                            'ΑΥ':'Au','ΕΥ':'Eu','ΟΥ':'Ou',
+                        //Lowercase
+                            'αυ':'au','ευ':'eu','ου':'ou',
+                //Special characters
+                    ';':'?','.':'.',',':',','’':'’','ʹ':'ʹ','-':'-','_':'_','ϲ':'s',
+                    //iota subscript
+                        'ᾳ': 'a','ῃ': 'ī','ῳ': 'ō',
+                        'ᾳ': 'a','ῃ': 'ī',
+                    //Ypodialitika    
+                        //Uppercase
+                            'Ϊ':'I','Ϋ':'Y',
+                        //Lowercase
+                            'ϊ':'i','ϋ':'y','ΐ':'i','ΰ':'y'
+
+    }
+    const transliterationMapStarters = {
+        'Μπ':'B','μπ':'b'
+    }
+    
+    let result = '';
+    let i = 0;
+    let isWordStart = true;
+
+    while (i < text.length) {
+        
+        if (text[i]=== ' '){
+            result += text[i];
+            isWordStart = true;
+            i++
+            continue;
+        }
+        if(isWordStart){
+            const twoLetterCombo = text[i] + text[i+1];
+            //Starters (2 Letters)
+            if(transliterationMapStarters.hasOwnProperty(twoLetterCombo)) {
+                result += transliterationMapStarters[twoLetterCombo];
+                i += 2; // Move to the next pair of characters
+                isWordStart = false;
+                continue;
+            }else{ 
+                //Handle 3-letter combinations
+                const threeLetterCombo = text[i] + text[i+1] + text[i+2];
+                if (transliterationMap.hasOwnProperty(threeLetterCombo)){
+                    result += transliterationMap[threeLetterCombo];
+                    i += 2; // Move to the next pair of characters
+                    isWordStart = false;
+                    continue;
+                }
+                //Handle 2-letter combinations
+                const twoLetterCombo = text[i] + text[i+1];
+                if(transliterationMap.hasOwnProperty(twoLetterCombo)) {
+                    result += transliterationMap[twoLetterCombo];
+                    i += 2; // Move to the next pair of characters
+                    isWordStart = false;
+                    continue;
+                }
+                //Single letter combinations    
+                result += transliterationMap[text[i]] || '*';
+                i++
+                isWordStart=false;}
+        }else{
+            //Handle 3-letter combinations
+            const threeLetterCombo = text[i] + text[i+1] + text[i+2];
+            if (transliterationMap.hasOwnProperty(threeLetterCombo)){
+                result += transliterationMap[threeLetterCombo];
+                i += 2; // Move to the next pair of characters
+                isWordStart = false;
+                continue;
+            }
+            //Handle 2-letter combinations
+            const twoLetterCombo = text[i] + text[i+1];
+            if(transliterationMap.hasOwnProperty(twoLetterCombo)) {
+                result += transliterationMap[twoLetterCombo];
+                i += 2; // Move to the next pair of characters
+                isWordStart = false;
+                continue;
+            }
+            //Single letter combinations    
+            result += transliterationMap[text[i]] || '*';
+            i++
+            isWordStart=false;
+        }
+    }
+    return result;
+}
 
 function modernGreekToLatinTransliterationRomanization(text) {
     const transliterationMap = {
@@ -426,8 +552,6 @@ function modernGreekToLatinTransliterationRomanization(text) {
     return result;
 
 }
-
-//----------------------------------------------------------------------------------------------------------------------------------------
 
 function ancientGreekToLatinTransliterationRomanization(text) {
     const transliterationMap = {
@@ -616,23 +740,5 @@ function ancientGreekToLatinTransliterationRomanization(text) {
 
 }
 
-
-
-// //Greek to Latin
-        //    
-
-            //Romanization Table /Modern
-              //Single-letter Mapping
-            //   'Α':'A','α':'a','Β':'V','β':'v','Γ':'G','γ':'g','Δ':'D','δ':'d','Ε':'E','ε':'e','Ζ':'Z','ζ':'z','Η':'Ē','η':'ē','Θ':'Th',
-            //   'θ':'th','Ι':'I','ι':'i','Κ':'K','κ':'k','Λ':'L','λ':'l','Μ':'M','μ':'m','Ν':'N','ν':'n','Ξ':'X','ξ':'x','Ο':'O','ο':'o',
-            //   'Π':'P','π':'p','Ρ':'R','ρ':'r','Ῥ':'Rh','ῥ':'rh','C':'S','σ':'s','ϲ':'s','ς':'s','Τ':'T','τ':'t','Υ':'Y','υ':'y','Φ':'Ph',
-            //   'φ':'ph','Χ':'Ch','χ':'ch','Ψ':'Ps','ψ':'ps','Ω':'Ō','ω':'ō',
-            //  //Tonismena
-            //  'Ά':'A','ά':'a','Έ':'E','έ':'e','Ή':'Ē','ή':'ē','Ί':'I','ί':'i','Ϊ':'I','ϊ':'i','ΐ':'i','Ό':'O','ό':'o','Ύ':'Y','Ϋ':'Y',
-            //  'ύ':'y','ϋ':'u','ΰ':'u','Ώ':'Ō','ώ':'ō',
-            //   //Archail Letters
-            //   'Ϝ':'W','ϝ':'w','Ϙ':'Ḳ','ϙ':'ḳ',
-            // //2-letters Mapping
-            //   'γγ':'ng','γξ':'nx','γχ':'nch','Μπ':'B','μπ':'b','Ντ':'D̲','ντ':'d̲',
-            //   'Αυ':'Au','Ευ':'Eu','Ηυ':'Ēu','Ου':'Ou','Υι':'Yi','Ωυ':'Ōu',
-            //   'αυ':'au','ευ':'eu','ηυ':'ēu','ου':'ou','υι':'ui','ωυ':'ōu'
+// Set default language to Greek
+setLanguage('el');
