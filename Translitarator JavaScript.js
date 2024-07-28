@@ -39,10 +39,9 @@ function setLanguage(lang) {
 
 function copyText(id) {
     const text = document.getElementById(id).value;
-    navigator.clipboard.writeText(text).then(() => {
-        alert(translations[currentLanguage].copy);
-    });
+    navigator.clipboard.writeText(text);
 }
+
 
 function clearForm() {
     const ancientGreekCheckbox = document.getElementById('ancient-greek').checked;
