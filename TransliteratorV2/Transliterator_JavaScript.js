@@ -9,7 +9,8 @@ const translations = {
         iso843Label: "ISO843:1997",
         submitButton: "Υποβολή",
         clearButton: "Καθαρισμός",
-        disclaimer: "Disclaimer: Για τον μεταγραμματισμό ονομάτων και φράσεων στα νέα ελληνικά σύμφωνα με τους κανόνες του ALA-LC Romanization table, επιβεβαιώστε την προέλευση των λέξεων (αν δηλαδή προέρχονται από δασυνόμενες λέξεις της αρχαίας ελληνικής) μέσα από το <a href='https://www.greek-language.gr/digitalResources/ancient_greek/tools/liddell-scott/index.html' target='_blank' target='_blank'>online λεξικό αρχαίας ελληνικής των Liddell-Scott</a>στον δικτυακό τόπο του Κέντρου Ελληνικής Γλώσσας."
+        disclaimer: "Disclaimer: Για τον μεταγραμματισμό ονομάτων και φράσεων στα νέα ελληνικά σύμφωνα με τους κανόνες του ALA-LC Romanization table, επιβεβαιώστε την προέλευση των λέξεων (αν δηλαδή προέρχονται από δασυνόμενες λέξεις της αρχαίας ελληνικής) μέσα από το <a href='https://www.greek-language.gr/digitalResources/ancient_greek/tools/liddell-scott/index.html' target='_blank' target='_blank'>online λεξικό αρχαίας ελληνικής των Liddell-Scott </a>στον δικτυακό τόπο του Κέντρου Ελληνικής Γλώσσας.",
+        credits: "<i class='fas fa-question-circle'></i> Το έργο αυτό αναπτύχθηκε από τον Ηλία Τσιτσιλέγκα στο πλαίσιο της διπλωματικής του εργασίας στο Τμήμα Μηχανικών Πληροφορικής και Ηλεκτρονικών Συστημάτων, Διεθνές Πανεπιστήμιο της Ελλάδος, με επιβλέποντα τον Επίκουρο Καθηγητή Χαράλαμπο Μπράτσα σε συνεργασία με το προσωπικό της Εθνικής Βιβλιοθήκης Ελλάδος."
     },
     en: {
         title: "Transliteration of Greek characters into Latin",
@@ -21,7 +22,8 @@ const translations = {
         iso843Label: "ISO843:1997",
         submitButton: "Submit",
         clearButton: "Clear",
-        disclaimer: "Disclaimer: For the transliteration of names and phrases in Modern Greek according to the rules of the ALA-LC Romanization table, confirm the origin of the words (whether they come from aspirated words of Ancient Greek) through the <a href='https://www.greek-language.gr/digitalResources/ancient_greek/tools/liddell-scott/index.html' target='_blank'>online Ancient Greek Liddell-Scott dictionary</a> on the website of the Center for the Greek Language."
+        disclaimer: "Disclaimer: For the transliteration of names and phrases in Modern Greek according to the rules of the ALA-LC Romanization table, confirm the origin of the words (whether they come from aspirated words of Ancient Greek) through the <a href='https://www.greek-language.gr/digitalResources/ancient_greek/tools/liddell-scott/index.html' target='_blank'>online Ancient Greek Liddell-Scott dictionary</a> on the website of the Center for the Greek Language.",
+        credits: "<i class='fas fa-question-circle'></i> This project was developed by Ilias Tsitsilegkas as part of his thesis at the Department of Information and Electronic Engineering, International Hellenic University, under the supervision of Assistant Professor Charalampos Bratsas, in collaboration with the staff of the National Library of Greece."
     }
 };
 
@@ -38,6 +40,7 @@ function setLanguage(lang) {
     document.getElementById('submit-button').textContent = translations[lang].submitButton;
     document.getElementById('clear-button').textContent = translations[lang].clearButton;
     document.getElementById('disclaimer').innerHTML = translations[lang].disclaimer;
+    document.getElementById('credits-text').innerHTML = translations[lang].credits;
 }
 
 function copyText(id) {
@@ -93,7 +96,7 @@ function modernGreekToLatinTransliterationIso843(text) {
                 //Special characters
                     ';':'?','.':'.',',':',','’':'’','ʹ':'ʹ','-':'-','_':'_','(':'(',')':')','΄':'΄','«':'"','»':'"','·':';','"':'"',
                     '&':'&','%':'%','@':'@','#':'#','^':'^','*':'*','+':'+','/':'/','[':'[',']':']','{':'{','}':'}','`':'`',"'":"'",
-                    '!':'!',':':':','$':'$',
+                    '!':'!',':':':','$':'$','=':'=',
                     //Numbers
                     '0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9',
                     //Dialitika
@@ -260,7 +263,7 @@ function ancientGreekToLatinTransliterationIso843(text) {
                 //Special characters
                     ';':'?','.':'.',',':',','’':'’','ʹ':'ʹ','-':'-','_':'_','(':'(',')':')','΄':'΄','«':'"','»':'"','·':';','"':'"',
                     '&':'&','%':'%','@':'@','#':'#','^':'^','*':'*','+':'+','/':'/','[':'[',']':']','{':'{','}':'}','`':'`',"'":"'",
-                    '!':'!',':':':','$':'$',
+                    '!':'!',':':':','$':'$','=':'=',
                     //Numbers
                     '0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9',
                     //Dialitika
@@ -330,7 +333,7 @@ function modernGreekToLatinTransliterationRomanization(text) {
                 //Special characters
                     ';':'?','.':'.',',':',','’':'’','ʹ':'ʹ','-':'-','_':'_','(':'(',')':')','΄':'΄','«':'"','»':'"','·':';','"':'"',
                     '&':'&','%':'%','@':'@','#':'#','^':'^','*':'*','+':'+','/':'/','[':'[',']':']','{':'{','}':'}','`':'`',"'":"'",
-                    '!':'!',':':':','$':'$',
+                    '!':'!',':':':','$':'$','=':'=',
                     //Numbers
                     '0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9',
                     //Uppercase
@@ -339,14 +342,15 @@ function modernGreekToLatinTransliterationRomanization(text) {
                     'ϊ':'i','ϋ':'u','ΐ':'i','ΰ':'u',
 
             //2-letters Mapping
-                    //Uppercase
-                    'Αυ':'Au','Ευ':'Eu','Ηυ':'Ēu','Ου':'Ēu','Ωυ':'Ōu',
-                    //Lowercase
-                    'άι':'ai','γγ':'ng','γκ':'nk','γξ':'nx','γχ':'nch','έι':'ei','μπ':'mp','ντ':'nt',
-                    'αυ':'au','ευ':'eu','ηυ':'ēu','ου':'ou','ωυ':'ōu',
-                    //Tonismena
-                    'Αύ':'Au','Εύ':'Eu','Ηύ':'Ēu','Ού':'Ēu','Ωύ':'Ōu',
-                    'αύ':'au','εύ':'eu','ηύ':'ēu','ού':'ou','ωύ':'ōu',
+                     //Uppercase
+                        'Αυ':'Au','Ευ':'Eu','Ηυ':'Ēu','Ου':'Ou','Ωυ':'Ōu',
+                     //Lowercase
+                         'άι':'ai','γγ':'ng','γκ':'nk','γξ':'nx','γχ':'nch','έι':'ei','μπ':'mp','ντ':'nt',
+                         'αυ':'au','ευ':'eu','ηυ':'ēu','ου':'ou','ωυ':'ōu',
+                     //Tonismena
+                         'Αύ':'Au','Εύ':'Eu','Ηύ':'Ēu','Ού':'Ou','Ωύ':'Ōu',
+                         'αύ':'au','εύ':'eu','ηύ':'ēu','ού':'ou','ωύ':'ōu',
+            
                     
                 //Shmeiosh 7
                     //keno
@@ -394,13 +398,17 @@ function modernGreekToLatinTransliterationRomanization(text) {
                      'Ἁ':'Ha','Ἑ':'He','Ἡ':'Hē','Ἱ':'Hi','Ὁ':'Ho','Ὑ':'Hy','Ῥ':'Rh','Ὡ':'Hō',
                      'Ἅ':'Ha','Ἕ':'He','Ἥ':'Hē','Ἵ':'Hi','Ὅ':'Ho','Ὥ':'Hō',//+oxia
                      'ᾍ':'Ha','Ἓ':'He',  
-                     'Εὕ':'Eu',
                     //Lowercase
                         'ἁ':'ha','ἑ':'he','ἡ':'hē','ἱ':'hi','ὁ':'ho','ὑ':'hu','ὡ':'hō',
                         'ᾁ':'ha','ᾑ':'hē','ᾡ':'hō','ᾅ':'ha','ῥ':'hr','ῳ':'hō',
                         'ἅ':'ha','ἕ':'he','ἥ':'hē','ἵ':'hi','ὅ':'ho','ὕ':'hu', //+oxia   
                         'ᾕ':'hē','ᾥ':'hō',//oxia
                         'ἇ':'ha','ἧ':'hē','ἷ':'hi','ὗ':'hu','ὧ':'hō',//perispomeni
+                        //2 letters
+                            //Uppercase
+                                'Αὔ':'Hau','Εὔ':'Heu','Ηὔ':'Hēu','Οὔ':'Hou','Ωὔ':'Hōu',
+                            //Lowercase
+                                'αὔ':'hau','εὔ':'heu','ηὔ':'hēu','οὔ':'hou','ωὔ':'hōu',
                     //Apostrofos ( ᾽ )
                         //Uppercase
                             'Ἀ':'A','Ἐ':'E','Ἠ':'Ē','Ἰ':'I','Ὀ':'O','Ὠ':'Ō',
@@ -423,12 +431,24 @@ function modernGreekToLatinTransliterationRomanization(text) {
 
             //2-letters Starters
                     //Uppercase
-                        'Μπ':'B','Ντ':'D̲',  
+                        'Μπ':'B','Ντ':'D̲',
                 
                     //Lowercase
                         'ντ':'d̲','μπ':'b',
                     //2 letter output
                         'Γκ':'Gk','γκ':'gk',
+            //Me Daseia
+                    //Uppercase
+                        'Αὐ':'Hau','Εὐ':'Heu','Ηὐ':'Hēu','Οὐ':'Hou','Ωὐ':'Hōu',
+                        'Αὔ':'Hau','Εὔ':'Heu','Ηὔ':'Hēu','Οὔ':'Hou','Ωὔ':'Hōu',//+Oxia
+                        'Αὕ':'Hau','Εὕ':'Heu','Ηὕ':'Hēu','Οὕ':'Hou','Ωὕ':'Hōu',//diff ascii code /oxia
+                        'Αὖ':'Hau','Εὖ':'Heu','Ηὖ':'Hēu','Οὖ':'Hou','Ωὖ':'Hōu',//+perispomeni
+                
+                    //Lowercase
+                        'αὐ':'hau','εὐ':'heu','ηὐ':'hēu','οὐ':'hou','ωὐ':'hōu',
+                        'αὔ':'hau','εὔ':'heu','ηὔ':'hēu','οὔ':'hou','ωὔ':'hōu',//+Oxia
+                        'αὕ':'hau','εὕ':'heu','ηὕ':'hēu','οὕ':'hou','ωὕ':'hōu',//diff ascii code /oxia
+                        'αὖ':'hau','εὖ':'heu','ηὖ':'hēu','οὖ':'hou','ωὖ':'hōu',//+perispomeni
 
      //Special Occasions
 
@@ -728,7 +748,7 @@ function ancientGreekToLatinTransliterationRomanization(text) {
                             'ᾇ':'a','ᾗ':'ē',                'ᾧ':'ō',//+Daseia +iota
                             
                     //Dasia (Rough Breathing) ( ῾ )
-                        //Uppercase  Έ
+                        //Uppercase 
                             'Ἁ':'Ha','Ἑ':'He','Ἡ':'Hē','Ἱ':'Hi','Ὁ':'Ho','Ὑ':'Hy','Ῥ':'Rh','Ὡ':'Hō',
                             'Ἅ':'Ha','Ἕ':'He','Ἥ':'Hē','Ἵ':'Hi','Ὅ':'Ho','Ὥ':'Hō',//+oxia
                                      'Ἓ':'He',                                    
@@ -739,6 +759,7 @@ function ancientGreekToLatinTransliterationRomanization(text) {
                             'ἅ':'ha','ἕ':'he','ἥ':'hē','ἵ':'hi','ὅ':'ho','ὕ':'hu', //+oxia   
                             'ᾕ':'hē','ᾥ':'hō',//+oxia + iota
                             'ἇ':'ha','ἧ':'hē','ἷ':'hi','ὗ':'hu','ὧ':'hō',//+perispomeni
+                        
                     //Apostrofos ( ᾽ )
                         //Uppercase
                             'Ἀ':'A','Ἐ':'E','Ἠ':'Ē','Ἰ':'I','Ὀ':'O','Ὠ':'Ō',
@@ -750,7 +771,7 @@ function ancientGreekToLatinTransliterationRomanization(text) {
                 //Special characters
                     ';':'?','.':'.',',':',','’':'’','ʹ':'ʹ','-':'-','_':'_','(':'(',')':')','΄':'΄','«':'"','»':'"','·':';','"':'"',
                     '&':'&','%':'%','@':'@','#':'#','^':'^','*':'*','+':'+','/':'/','[':'[',']':']','{':'{','}':'}','`':'`',"'":"'",
-                    '!':'!',':':':','$':'$',
+                    '!':'!',':':':','$':'$','=':'=',
                     //Numbers
                     '0':'0','1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9',
                     //iota subscript
@@ -763,16 +784,15 @@ function ancientGreekToLatinTransliterationRomanization(text) {
 
             //2-letters Mapping
                     //Uppercase
-                    'Αυ':'Au','Ευ':'Eu','Ηυ':'Ēu','Ου':'Ēu','Ωυ':'Ōu',
+                        'Αυ':'Au','Ευ':'Eu','Ηυ':'Ēu','Ου':'Ou','Ωυ':'Ōu',
                     //Lowercase
-                    'άι':'ai','γγ':'ng','γκ':'nk','γξ':'nx','γχ':'nch','έι':'ei','μπ':'mp','ντ':'nt',
-                    'αυ':'au','ευ':'eu','ηυ':'ēu','ου':'ou','ωυ':'ōu',
+                        'άι':'ai','γγ':'ng','γκ':'nk','γξ':'nx','γχ':'nch','έι':'ei','μπ':'mp','ντ':'nt',
+                        'αυ':'au','ευ':'eu','ηυ':'ēu','ου':'ou','ωυ':'ōu',
                     //Tonismena
-                    'Αύ':'Au','Εύ':'Eu','Ηύ':'Ēu','Ού':'Ēu','Ωύ':'Ōu',
-                    'αύ':'au','εύ':'eu','ηύ':'ēu','ού':'ou','ωύ':'ōu',
-                    'Εὕ':'Eu',
+                        'Αύ':'Au','Εύ':'Eu','Ηύ':'Ēu','Ού':'Ou','Ωύ':'Ōu',
+                        'αύ':'au','εύ':'eu','ηύ':'ēu','ού':'ou','ωύ':'ōu',
 
-                //Shmeiosh 7 (In the end of a word)
+                //Shmeiosh 7 (In the end of a word) - (3 letters)
                     //keno
                         'γκ ':'gk','μπ ':'mp',
                     //With special charachers
@@ -780,11 +800,7 @@ function ancientGreekToLatinTransliterationRomanization(text) {
 
                 //Shmeiosh 9   ά, έ, ή, ί, ό, ώ       ή     ϋ,ΰ
                     'Άυ':'Áv','Έυ':'Év','Ήυ':'Ī́v','Όυ':'Óv',
-                    'άυ':'áv','έυ':'év','ήυ':'ī́v','όυ':'óv',
-
-                //gia meta
-                'εὕρ':'heu','αἱρ':'hai','ΓΧ':'Nch','γχ':'nch'
-                
+                    'άυ':'áv','έυ':'év','ήυ':'ī́v','όυ':'óv'
                     
     }
 
@@ -797,7 +813,19 @@ function ancientGreekToLatinTransliterationRomanization(text) {
                     //Lowercase
                         'ντ':'d̲','μπ':'b',
                     //2 letter output
-                        'Γκ':'Gk','γκ':'gk'
+                        'Γκ':'Gk','γκ':'gk',
+            //Me Daseia
+                    //Uppercase
+                    'Αὐ':'Hau','Εὐ':'Heu','Ηὐ':'Hēu','Οὐ':'Hou','Ωὐ':'Hōu',
+                    'Αὔ':'Hau','Εὔ':'Heu','Ηὔ':'Hēu','Οὔ':'Hou','Ωὔ':'Hōu',//+Oxia
+                    'Αὕ':'Hau','Εὕ':'Heu','Ηὕ':'Hēu','Οὕ':'Hou','Ωὕ':'Hōu',//diff ascii code /oxia
+                    'Αὖ':'Hau','Εὖ':'Heu','Ηὖ':'Hēu','Οὖ':'Hou','Ωὖ':'Hōu',//+perispomeni
+            
+                //Lowercase
+                    'αὐ':'hau','εὐ':'heu','ηὐ':'hēu','οὐ':'hou','ωὐ':'hōu',
+                    'αὔ':'hau','εὔ':'heu','ηὔ':'hēu','οὔ':'hou','ωὔ':'hōu',//+Oxia
+                    'αὕ':'hau','εὕ':'heu','ηὕ':'hēu','οὕ':'hou','ωὕ':'hōu',//diff ascii code /oxia
+                    'αὖ':'hau','εὖ':'heu','ηὖ':'hēu','οὖ':'hou','ωὖ':'hōu',//+perispomeni
     }
 
     let result = '';

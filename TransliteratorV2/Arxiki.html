@@ -9,43 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <style>
-    .tooltip {
-        position: relative;
-        display: inline-block;
-    }
-
-    .tooltip .tooltipText {
-        visibility: hidden;
-        width: 200px;
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        border-radius: 5px;
-        padding: 5px;
-        position: absolute;
-        z-index: 1;
-        top: 100%;
-        left: 50%;
-        margin-left: -100px;
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-
-    .tooltip .tooltipText::after {
-        content: "";
-        position: absolute;
-        top: -5px;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent transparent #333 transparent;
-    }
-
-    .tooltip:hover .tooltipText {
-        visibility: visible;
-        opacity: 1;
-    }
+   .credits-text {
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+    line-height: 1.5;
+}
 </style>
 <body>
 <div class="container">
@@ -60,7 +30,6 @@
         <img src="english-flag.png" alt="English" id="english-flag" onclick="setLanguage('en')" title="English">
     </div>
 
-    <!-- Title with language support -->
     <h1 id="title" style="font-family: 'Segoe UI', sans-serif;">Μεταγραμματισμός ελληνικών χαρακτήρων σε λατινικούς</h1>
 
     <form id="transliteration-form">
@@ -69,9 +38,13 @@
                 <label for="text" id="text-label">Κείμενο</label>
                 <input type="checkbox" id="ancient-greek">
                 <label for="ancient-greek" id="ancient-greek-label">Αρχαία ελληνικά</label>
-                <textarea id="text" placeholder="Εισάγετε το κείμενο για μεταγραμματισμό"></textarea>
+                <div class="textarea-container">
+                    <textarea id="text"  style="height: 277px;" placeholder="Εισάγετε το κείμενο για μεταγραμματισμό"></textarea>
+                </div>
+                <div class="button-container">
+                    <button type="button" id="clear-button" onclick="clearForm()">Καθαρισμός</button>
+                </div>
             </div>
-
             <div class="result-section">
                 <div class="output-box">
                     <label for="ala-lc" id="ala-lc-label">ALA-LC Romanization</label>
@@ -88,25 +61,18 @@
                         <button type="button" class="copy-button" onclick="copyText('iso843')">Copy</button>
                     </div>
                 </div>
+                <button type="submit" id="submit-button">Υποβολή</button>
             </div>
-        </div>
-
-        <div class="button-group">
-            <button type="button" id="clear-button" onclick="clearForm()">Καθαρισμός</button>
-            <button type="submit" id="submit-button">Υποβολή</button>
         </div>
     </form>
 
     <footer>
         <p class="disclaimer" id="disclaimer"></p>
     </footer>
-    <p class="creator-name">Created by: Ilias Tsitsilegkas
-        <span class="tooltip">
-        <i class="fas fa-question-circle"></i> Credits
-        <span id="tooltipText" class="tooltipText">Το έργο αυτό αναπτύχθηκε από τον Ηλία Τσιτσιλέγκα στο πλαίσιο της διπλωματικής του εργασίας στο Διεθνές Πανεπιστήμιο της Ελλάδος, Τμήμα Μηχανικών Πληροφορικής και Ηλεκτρονικών Συστημάτων, με επιβλέποντα τον Επ.Καθηγητή Χαράλαμπο Μπράτσα</span>
-        </span>
+    <p class="credits-text" id="credits-text">
+        <i class="fas fa-question-circle"></i>Το έργο αυτό αναπτύχθηκε από τον Ηλία Τσιτσιλέγκα στο πλαίσιο της διπλωματικής του εργασίας στο Τμήμα Μηχανικών Πληροφορικής και Ηλεκτρονικών Συστημάτων, Διεθνές Πανεπιστήμιο της Ελλάδος, με επιβλέποντα τον Επίκουρο Καθηγητή Χαράλαμπο Μπράτσα σε συνεργασία με το προσωπικό της Εθνικής Βιβλιοθήκης Ελλάδος.
     </p>
 </div>
-<script src="Transliterator Javascript.js"></script>
+<script src="Transliterator_Javascript.js"></script>
 </body>
 </html>
