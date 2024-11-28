@@ -64,7 +64,6 @@ function setLanguage(lang) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Ανάκτηση της αποθηκευμένης γλώσσας ή προεπιλογή στα Ελληνικά
     const savedLanguage = localStorage.getItem('selectedLanguage') || 'el';
     setLanguage(savedLanguage);
 });
