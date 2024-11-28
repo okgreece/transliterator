@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Μεταγραμματισμός ελληνικών χαρακτήρων σε λατινικούς</title>
+    <link rel="icon" href="national_library_of_greece.svg" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+    <style>
+        #disc {
+            padding-top: 50px;
+            margin-bottom: 40px;
+        }
+        
+        .help-content {
+            max-width: 800px;
+            margin: 0 auto; 
+            line-height: 1.6;
+            font-size: 15px;
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        .help-content p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .justified-text p {
+            margin: 5px 0;
+        }
+
+        .justified-text {
+            text-align: justify;
+        }
+
+        .help-content ul {
+            list-style-type: disc;
+            display: inline-block;
+            text-align: left;
+            margin-left: 0;
+        }
+
+        .help-content ul li {
+            margin-bottom: 5px;
+        }
+
+        .underline-link {
+            text-decoration: underline;
+        }
+        .top-bar span {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            color: #333;
+            transition: color 0.3s, text-decoration 0.3s ease-in-out;
+        }
+
+        .top-bar span:hover {
+            color: #000000;
+            text-decoration: underline;
+        }
+
+        .separator {
+            color: #ccc;
+            margin: 0 10px;
+        }
+        
+        #help-note {
+            margin-top: 40px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <a href="Arxiki.html" class="logo">
+        <img src="transilteration_logo_white.png" alt="National Library of Greece">
+    </a>
+
+    <div class="top-bar">
+        <span id="about" onclick="navigateTo('about')" title="Σχετικά">Σχετικά</span>
+        <span class="separator"></span>
+        <span id="help" onclick="navigateTo('help')" title="Βοήθεια">Βοήθεια</span>
+    </div>
+
+    <div class="language-selection">
+        <span id="greek-language" onclick="setLanguage('el')" title="Ελληνικά">EL</span>
+        <span class="separator">|</span>
+        <span id="english-language" onclick="setLanguage('en')" title="English">EN</span>
+    </div>
+
+    <h1 id="disc" style="font-family: 'Noto Sans', sans-serif;">Βοήθεια</h1>
+
+    <div class="help-content">
+        <p id="help1" class="justified-text">Για τον μεταγραμματισμό ονομάτων ή φράσεων από τα Νέα Ελληνικά σε λατινικούς χαρακτήρες:</p>
+        <ul>
+            <li id="help-steps1">εισάγετε στο αριστερό πλαίσιο το κείμενο που επιθυμείτε να μεταγράψετε</li>
+            <li id="help-steps2">πατήστε ‘Υποβολή’</li>
+            <li id="help-steps3">αντιγράψτε το μεταγραμμένο κείμενο πατώντας ‘Αντιγραφή’</li>
+        </ul>
+        <p id="help2" class="justified-text">Για τον μεταγραμματισμό ονομάτων ή φράσεων από τα Αρχαία Ελληνικά σε λατινικούς χαρακτήρες ακολουθήστε τα παραπάνω βήματα αφού προηγουμένως έχετε επιλέξει την ένδειξη ‘Αρχαία Ελληνικά’ που βρίσκεται πάνω από το αριστερό πλαίσιο της οθόνης.</p>
+        <p id="help-note" class="justified-text"></p>
+    </div>
+
+</div>
+
+<script>
+
+const translations = {
+    el: {
+        title: "Βοήθεια",
+        help1: "Για τον μεταγραμματισμό ονομάτων ή φράσεων από τα Νέα Ελληνικά σε λατινικούς χαρακτήρες:",
+        helpSteps: [
+            "εισάγετε στο αριστερό πλαίσιο το κείμενο που επιθυμείτε να μεταγράψετε",
+            "πατήστε ‘Υποβολή’",
+            "αντιγράψτε το μεταγραμμένο κείμενο πατώντας ‘Αντιγραφή’"
+        ],
+        help2: "Για τον μεταγραμματισμό ονομάτων ή φράσεων από τα Αρχαία Ελληνικά σε λατινικούς χαρακτήρες ακολουθήστε τα παραπάνω βήματα αφού προηγουμένως έχετε επιλέξει την ένδειξη ‘Αρχαία Ελληνικά’ που βρίσκεται πάνω από το αριστερό πλαίσιο της οθόνης.",
+        helpNote: "<b><p>Σημείωση:</p></b> Όταν η εφαρμογή δεν αναγνωρίζει κάποιον χαρακτήρα, τον μεταγραμματίζει με αστερίσκο ‘*’. Σε αυτήν την περίπτωση, και για τη βελτίωση της εφαρμογής, παρακαλούμε να αποστείλετε σχετικό μήνυμα προς το <a href='mailto:catalog@nlg.gr?subject=Εφαρμογή%20μεταγραμματισμού'  class='underline-link'>Τμήμα Καταλόγων</a> της ΕΒΕ συμπεριλαμβανομένου του χαρακτήρα που δεν αναγνωρίστηκε.",
+        about: "Σχετικά",
+        help: "Βοήθεια"
+    },
+    en: {
+        title: "Help",
+        help1: "For the romanisation of names or phrases from modern Greek to Latin characters:",
+        helpSteps: [
+            "use the left box to enter the text you wish to romanise",
+            "click 'Submit’",
+            "copy the romanised text using 'Copy'."
+        ],
+        help2: "To romanise names or phrases from ancient Greek to Latin characters, check the 'Ancient Greek’ located above the left box, and then follow the same steps.",
+        helpNote: "<b><p>Note:</p></b> If the application does not recognize a character, it transliterates this character using an asterisk '*'. In this case, and to help us improve the application, please send a message to the <a href='mailto:catalog@nlg.gr?subject=Transliteration%20Application' target='_blank' class='underline-link'>Cataloguing Department</a> of the NLG including the non-recognized character.",
+        about: "About",
+        help: "Help"
+    }
+};
+
+    function navigateTo(page) {
+        if (page === 'about') {
+            window.location.href = 'about.html';
+        } else if (page === 'help') {
+            window.location.href = 'help.html';
+        }
+    }
+
+    function setLanguage(language) {
+
+        localStorage.setItem('selectedLanguage', language);
+
+        // document.title = translations[language].title;
+
+        document.getElementById('disc').textContent = translations[language].title;
+        document.getElementById('help1').textContent = translations[language].help1;
+        document.getElementById('help2').textContent = translations[language].help2;
+        document.getElementById("help-note").innerHTML = translations[language].helpNote;
+
+        document.getElementById('about').innerHTML = translations[language].about;
+        document.getElementById('help').innerHTML = translations[language].help;
+
+        for (let i = 0; i < translations[language].helpSteps.length; i++) {
+            document.getElementById('help-steps' + (i + 1)).textContent = translations[language].helpSteps[i];
+        }
+
+        updateLanguageSelection(language);
+
+    }
+
+    function updateLanguageSelection(language) {
+
+        document.getElementById('greek-language').classList.remove('selected');
+        document.getElementById('english-language').classList.remove('selected');
+
+        if (language === 'el') {
+            document.getElementById('greek-language').classList.add('selected');
+        } else {
+            document.getElementById('english-language').classList.add('selected');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'el';
+    setLanguage(savedLanguage);
+    }); 
+</script>
+
+</body>
+</html>
