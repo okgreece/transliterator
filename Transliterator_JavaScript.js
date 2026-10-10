@@ -10,7 +10,7 @@ const translations = {
         submitButton: "Υποβολή",
         clearButton: "Καθαρισμός",
         disclaimer: "Disclaimer: Για τον μεταγραμματισμό ονομάτων και φράσεων στα νέα ελληνικά σύμφωνα με τους κανόνες του ALA-LC Romanization table, επιβεβαιώστε την προέλευση των λέξεων (αν δηλαδή προέρχονται από δασυνόμενες λέξεις της αρχαίας ελληνικής) μέσα από το <a href='https://www.greek-language.gr/digitalResources/ancient_greek/tools/liddell-scott/index.html' target='_blank' target='_blank'>online λεξικό αρχαίας ελληνικής των Liddell-Scott </a>στον δικτυακό τόπο του Κέντρου Ελληνικής Γλώσσας.",
-        credits: "<i class='fas fa-question-circle'></i> Το έργο αυτό αναπτύχθηκε από τον Ηλία Τσιτσιλέγκα στο πλαίσιο της διπλωματικής του εργασίας στο Τμήμα Μηχανικών Πληροφορικής και Ηλεκτρονικών Συστημάτων, Διεθνές Πανεπιστήμιο της Ελλάδος, με επιβλέποντα τον Επίκουρο Καθηγητή Χαράλαμπο Μπράτσα σε συνεργασία με το προσωπικό της Εθνικής Βιβλιοθήκης Ελλάδος.",
+        credits: "<i class='fas fa-question-circle'></i> Το έργο αυτό αναπτύχθηκε από τον Ηλία Τσιτσιλέγκα στο πλαίσιο της διπλωματικής του εργασίας στο Τμήμα Μηχανικών Πληροφορικής και Ηλεκτρονικών Συστημάτων, Διεθνές Πανεπιστήμιο της Ελλάδος, με επιβλέποντα τον Αναπληρωτή Καθηγητή Χαράλαμπο Μπράτσα σε συνεργασία με το προσωπικό της Εθνικής Βιβλιοθήκης Ελλάδος.",
         about: "Σχετικά",
         help: "Βοήθεια",
         copy: "Αντιγραφή"
@@ -26,7 +26,7 @@ const translations = {
         submitButton: "Submit",
         clearButton: "Clear",
         disclaimer: "Disclaimer: For the transliteration of names and phrases in Modern Greek according to the rules of the ALA-LC Romanization table, confirm the origin of the words (whether they come from aspirated words of Ancient Greek) through the <a href='https://www.greek-language.gr/digitalResources/ancient_greek/tools/liddell-scott/index.html' target='_blank'>online Ancient Greek Liddell-Scott dictionary</a> on the website of the Center for the Greek Language.",
-        credits: "<i class='fas fa-question-circle'></i> This project was developed by Ilias Tsitsilegkas as part of his thesis at the Department of Information and Electronic Engineering, International Hellenic University, under the supervision of Assistant Professor Charalampos Bratsas, in collaboration with the staff of the National Library of Greece.",
+        credits: "<i class='fas fa-question-circle'></i> This project was developed by Ilias Tsitsilegkas as part of his thesis at the Department of Information and Electronic Engineering, International Hellenic University, under the supervision of Associate Professor Charalampos Bratsas, in collaboration with the staff of the National Library of Greece.",
         about: "About",
         help: "Help",
         copy: "Copy"
@@ -83,7 +83,7 @@ function navigateTo(page) {
 
 function goToHomePage() {
     const language = localStorage.getItem('selectedLanguage') || 'el';
-    window.location.href = `Arxiki.html?lang=${language}`;
+    window.location.href = `index.html?lang=${language}`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
